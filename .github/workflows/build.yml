@@ -24,14 +24,11 @@ jobs:
     - name: Run build
       run: npm run build
 
-    - name: Bump version and tag (main branch only)
+    - name: Bump version (without commit)
       if: github.ref == 'refs/heads/main'
       run: |
-        # Bump minor version (e.g. from 1.0.5 to 1.0.6)
-        npm version minor
-
-        # Push the new version back to the repo
-        git push --follow-tags
+        # Bump minor version without creating a commit or git tag
+        npm version minor --no-git-tag-version
 
     - name: Publish to npm (main branch only)
       if: github.ref == 'refs/heads/main'
