@@ -15,5 +15,5 @@ export default {
     commonjs(),
     typescript(),
   ],
-  external: ['@testing-library/dom', '@testing-library/react'],
+  external: ['@testing-library/dom'],
 };

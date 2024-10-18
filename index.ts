@@ -1,4 +1,4 @@
-import { screen, MatcherOptions } from "@testing-library/react";
+import { screen, MatcherOptions } from "@testing-library/dom";
 
 export const getText = (text: string, options?: MatcherOptions) => {
   return screen.getByText('text', options);
