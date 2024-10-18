@@ -10,6 +10,11 @@ export default {
       format: 'cjs',
       interop: 'compat',
     },
+    {
+      file: pkg.module,
+      format: 'es',
+      interop: 'compat',
+    },
   ],
   plugins: [
     commonjs(),

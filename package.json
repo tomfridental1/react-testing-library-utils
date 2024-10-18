@@ -1,8 +1,9 @@
 {
   "name": "react-testing-library-utils",
-  "version": "1.0.1",
+  "version": "1.0.3",
   "description": "This package is a wrapper for react-testing-library, providing a more convenient way to test React components.",
-  "main": "dist/index.ts",
+  "main": "dist/index.cjs.ts",
+  "module": "dist/index.esm.ts",
   "scripts": {
     "build": "rollup -c rollup.config.ts --bundleConfigAsCjs",
     "test": "test"
