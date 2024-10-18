@@ -27,8 +27,10 @@ jobs:
     - name: Bump version (without commit)
       if: github.ref == 'refs/heads/main'
       run: |
-        # Bump minor version without creating a commit or git tag
         npm version minor --no-git-tag-version
+
+    - name: Set npm registry
+      run: npm config set registry https://registry.npmjs.org/
 
     - name: Publish to npm (main branch only)
       if: github.ref == 'refs/heads/main'
