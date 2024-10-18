@@ -15,3 +15,13 @@ export const isLabelTruthy = (label: string, options?: SelectorMatcherOptions) =
   expect(element).toBeTruthy();
   return element;
 }
+
+export const isLabelFalsy = (label: string, options?: SelectorMatcherOptions) => {
+  expect(screen.queryByLabelText(label, options)).toBeFalsy();
+}
+
+export const isAsyncLabelTruthy = async (label: string, options?: SelectorMatcherOptions) => {
+  const element = await screen.findByLabelText(label, options);
+  expect(element).toBeTruthy();
+  return element;
+}
