@@ -1,4 +1,4 @@
-name: Build
+name: Build and Publish
 
 on:
   push:
@@ -24,8 +24,17 @@ jobs:
     - name: Run build
       run: npm run build
 
-    - name: Upload build artifacts (Optional)
-      uses: actions/upload-artifact@v3
-      with:
-        name: dist
-        path: dist/
+    - name: Bump version and tag (main branch only)
+      if: github.ref == 'refs/heads/main'
+      run: |
+        # Bump minor version (e.g. from 1.0.5 to 1.0.6)
+        npm version minor
+
+        # Push the new version back to the repo
+        git push --follow-tags
+
+    - name: Publish to npm (main branch only)
+      if: github.ref == 'refs/heads/main'
+      run: npm publish
+      env:
+        NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
