@@ -1,6 +1,7 @@
 import commonjs from '@rollup/plugin-commonjs';
 import typescript from '@rollup/plugin-typescript';
 import del from 'rollup-plugin-delete';
+import terser from '@rollup/plugin-terser';
 import pkg from './package.json';
 
 export default {
@@ -19,6 +20,7 @@ export default {
     del({ targets: ['dist/*'] }),
     commonjs(),
     typescript(),
+    terser(),
   ],
   external: ['@testing-library/dom', 'jest'],
 };
