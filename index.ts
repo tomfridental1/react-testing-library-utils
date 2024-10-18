@@ -1,9 +1,17 @@
-import { screen, MatcherOptions } from "@testing-library/dom";
+import { screen, MatcherOptions, SelectorMatcherOptions } from "@testing-library/dom";
 
-export const getText = (text: string, options?: MatcherOptions) => {
-  return screen.getByText('text', options);
+export const isTruthy = (text: string, options?: MatcherOptions) => {
+  const element = screen.getByText('text', options);
+  expect(element).toBeTruthy();
+  return element;
 }
 
-export const getAsyncText = async (text: string, options?: MatcherOptions) => {
-  return await screen.findByText('text', options);
+export const isFalsy = (text: string, options?: SelectorMatcherOptions) => {
+  expect(screen.queryByText(text, options)).toBeFalsy();
+}
+
+export const isLabelTruthy = (label: string, options?: SelectorMatcherOptions) => {
+  const element = screen.getByLabelText(label, options);
+  expect(element).toBeTruthy();
+  return element;
 }

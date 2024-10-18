@@ -1,5 +1,6 @@
 import commonjs from '@rollup/plugin-commonjs';
 import typescript from '@rollup/plugin-typescript';
+import del from 'rollup-plugin-delete';
 import pkg from './package.json';
 
 export default {
@@ -15,8 +16,9 @@ export default {
     },
   ],
   plugins: [
+    del({ targets: ['dist/*'] }),
     commonjs(),
     typescript(),
   ],
-  external: ['@testing-library/dom'],
+  external: ['@testing-library/dom', 'jest'],
 };
