@@ -25,3 +25,13 @@ export const isAsyncLabelTruthy = async (label: string, options?: SelectorMatche
   expect(element).toBeTruthy();
   return element;
 }
+
+export const isTestIdTruthy = (testId: string) => {
+  const element = screen.getByTestId(testId);
+  expect(element).toBeTruthy();
+  return element;
+}
+
+export const isTestIdFalsy = (testId: string) => {
+  expect(screen.queryByTestId(testId)).toBeFalsy();
+}
