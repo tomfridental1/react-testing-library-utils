@@ -41,7 +41,7 @@ jobs:
         echo "LAST_VERSION=$LAST_VERSION" >> $GITHUB_ENV
         echo "Last published version: $LAST_VERSION"
 
-    - name: Check if specific index changed
+    - name: Check if utils changed
       id: file_changed
       run: |
         if git diff --name-only HEAD^ HEAD | grep 'index.ts'; then
