@@ -1,5 +1,7 @@
 import { render } from '@testing-library/react';
-import { isTruthy, isFalsy, isLabelTruthy, isTestIdTruthy, isTestIdFalsy, isLabelFalsy, isAsyncLabelTruthy } from "index";
+import { testAssertions, testUtils } from "index";
+
+const { isTruthy, isFalsy, isLabelTruthy, isTestIdTruthy, isTestIdFalsy, isLabelFalsy, isAsyncLabelTruthy } = testAssertions;
 
 describe('test assertions', () => {
   it('isTruthy', () => {
@@ -36,4 +38,28 @@ describe('test assertions', () => {
     render(<span aria-label="async label">hello world</span>);
     await isAsyncLabelTruthy('async label');
   })
+
+  it('isButtonEnabled', () => {
+    render(<button>text</button>);
+    testAssertions.isButtonEnabled('text');
+  })
+
+  it('isButtonDisabled', () => {
+    render(<button disabled>text</button>);
+    testAssertions.isButtonDisabled('text');
+  })
 });
+
+describe('test utils', () => {
+  it('getButton by text', () => {
+    render(<button>click me</button>);
+    const button = testUtils.getButton('click me');
+    expect(button).toBeTruthy();
+  })
+
+  it('getButton by label', () => {
+    render(<button aria-label='test label'>click me</button>);
+    const button = testUtils.getButton('test label');
+    expect(button).toBeTruthy();
+  })
+})
