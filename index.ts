@@ -1,7 +1,7 @@
 import { screen, MatcherOptions, SelectorMatcherOptions } from "@testing-library/dom";
 
 export const isTruthy = (text: string, options?: MatcherOptions) => {
-  const element = screen.getByText('text', options);
+  const element = screen.getByText(text, options);
   expect(element).toBeTruthy();
   return element;
 }
