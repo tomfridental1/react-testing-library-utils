@@ -12,6 +12,8 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v3
+      with:
+        fetch-depth: 0  # Ensure full history is fetched to check for changes
 
     - name: Set up Node.js
       uses: actions/setup-node@v3
@@ -39,13 +41,25 @@ jobs:
         echo "LAST_VERSION=$LAST_VERSION" >> $GITHUB_ENV
         echo "Last published version: $LAST_VERSION"
 
-    - name: Bump version based on last published version
+    - name: Check if specific index changed
+      id: file_changed
+      run: |
+        if git diff --name-only HEAD^ HEAD | grep 'index.ts'; then
+          echo "File changed!"
+          echo "CHANGE_TYPE=minor" >> $GITHUB_ENV
+        else
+          echo "File did not change"
+          echo "CHANGE_TYPE=patch" >> $GITHUB_ENV
+        fi
+
+    - name: Bump version based on file change
       if: github.ref == 'refs/heads/main'
       run: |
-        if [ -z "$LAST_VERSION" ]; then
-          echo "No previous version found, starting at 1.0.0"
-          NEW_VERSION="1.0.0"
+        if [ "$CHANGE_TYPE" = "minor" ]; then
+          echo "Bumping minor version..."
+          NEW_VERSION=$(npx semver $LAST_VERSION -i minor)
         else
+          echo "Bumping patch version..."
           NEW_VERSION=$(npx semver $LAST_VERSION -i patch)
         fi
         echo "New version to be published: $NEW_VERSION"
