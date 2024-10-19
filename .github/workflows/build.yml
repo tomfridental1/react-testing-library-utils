@@ -46,7 +46,7 @@ jobs:
           echo "No previous version found, starting at 1.0.0"
           NEW_VERSION="1.0.0"
         else
-          NEW_VERSION=$(npx semver $LAST_VERSION -i minor)
+          NEW_VERSION=$(npx semver $LAST_VERSION -i patch)
         fi
         echo "New version to be published: $NEW_VERSION"
         npm version $NEW_VERSION --no-git-tag-version
