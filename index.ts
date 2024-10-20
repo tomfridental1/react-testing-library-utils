@@ -1,5 +1,5 @@
 import { screen, MatcherOptions, SelectorMatcherOptions } from "@testing-library/dom";
-import { ByRoleOptions } from "@testing-library/react";
+import { ByRoleOptions, fireEvent } from "@testing-library/react";
 
 const isTruthy = (text: string, options?: MatcherOptions) => {
   const element = screen.getByText(text, options);
@@ -37,8 +37,19 @@ const isTestIdFalsy = (testId: string, options?: MatcherOptions) => {
   expect(screen.queryByTestId(testId, options)).toBeFalsy();
 }
 
+const isDataAttributeTruthy = (attribute: string, value?: string) => {
+  const attributeValue = value ? `${attribute}="${value}"` : attribute;
+  const element = globalThis.document.querySelector(`[data-${attribute}]`);
+  expect(element).toBeTruthy();
+  return element;
+}
+
 const getButton = (name: string, options?: Omit<ByRoleOptions, 'name'>) => {
   return screen.getByRole<HTMLButtonElement>('button', { name, ...options });
+}
+
+const getInput = (label: string, options?: Omit<ByRoleOptions, 'name'>) => {
+  return screen.getByRole('textbox', { name: label, ...options }) as HTMLInputElement;
 }
 
 const isButtonDisabled = (name: string, options?: Omit<ByRoleOptions, 'name'>) => {
@@ -53,12 +64,23 @@ const isButtonEnabled = (name: string, options?: Omit<ByRoleOptions, 'name'>) =>
   return button;
 }
 
+const changeInputValue = (label: string, value: string, options?: Omit<ByRoleOptions, 'name'>) => {
+  const input = getInput(label, options);
+  changeInputValueEvent(input, value);
+  return input;
+}
+
+const changeInputValueEvent = (input: HTMLInputElement, value: string | number) => {
+  fireEvent.change(input, { target: { value } })
+}
+
 export const testAssertions = {
   isTruthy,
   isFalsy,
   isLabelTruthy,
   isLabelFalsy,
   isAsyncLabelTruthy,
+  isDataAttributeTruthy,
   isTestIdTruthy,
   isTestIdFalsy,
   isButtonEnabled,
@@ -67,4 +89,7 @@ export const testAssertions = {
 
 export const testUtils = {
   getButton,
+  getInput,
+  changeInputValue,
+  changeInputValueEvent
 }

@@ -34,6 +34,16 @@ describe('test assertions', () => {
     isTestIdFalsy('test class');
   })
 
+  it('isDataAttributeTruthy without value', () => {
+    render(<span data-status='active'>hello world</span>);
+    testAssertions.isDataAttributeTruthy('status');
+  })
+
+  it('isDataAttributeTruthy with value', () => {
+    render(<span data-status='active'>hello world</span>);
+    testAssertions.isDataAttributeTruthy('status', 'active');
+  })
+
   it('isTestIdFalsy', async () => {
     render(<span aria-label="async label">hello world</span>);
     await isAsyncLabelTruthy('async label');
@@ -61,5 +71,17 @@ describe('test utils', () => {
     render(<button aria-label='test label'>click me</button>);
     const button = testUtils.getButton('test label');
     expect(button).toBeTruthy();
+  })
+
+  it('getInput by label', () => {
+    render(<input aria-label="abc" />);
+    const input = testUtils.getInput('abc');
+    expect(input).toBeTruthy();
+  })
+
+  it('change input value', () => {
+    render(<input aria-label="abc" />);
+    const input = testUtils.changeInputValue('abc', 'new value');
+    expect(input.value).toBe('new value');
   })
 })
