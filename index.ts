@@ -39,7 +39,7 @@ const isTestIdFalsy = (testId: string, options?: MatcherOptions) => {
 
 const isDataAttributeTruthy = (attribute: string, value?: string) => {
   const attributeValue = value ? `${attribute}="${value}"` : attribute;
-  const element = globalThis.document.querySelector(`[data-${attribute}]`);
+  const element = globalThis.document.querySelector(`[data-${attributeValue}]`);
   expect(element).toBeTruthy();
   return element;
 }
@@ -74,6 +74,10 @@ const changeInputValueEvent = (input: HTMLInputElement, value: string | number) 
   fireEvent.change(input, { target: { value } })
 }
 
+const getInputByName = (name: string) => {
+  return globalThis.document.querySelector(`input[name="${name}"]`);
+}
+
 export const testAssertions = {
   isTruthy,
   isFalsy,
@@ -90,6 +94,7 @@ export const testAssertions = {
 export const testUtils = {
   getButton,
   getInput,
+  getInputByName,
   changeInputValue,
   changeInputValueEvent
 }

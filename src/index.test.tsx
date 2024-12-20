@@ -2,6 +2,7 @@ import { render } from '@testing-library/react';
 import { testAssertions, testUtils } from "index";
 
 const { isTruthy, isFalsy, isLabelTruthy, isTestIdTruthy, isTestIdFalsy, isLabelFalsy, isAsyncLabelTruthy } = testAssertions;
+const { getInputByName } = testUtils;
 
 describe('test assertions', () => {
   it('isTruthy', () => {
@@ -83,5 +84,11 @@ describe('test utils', () => {
     render(<input aria-label="abc" />);
     const input = testUtils.changeInputValue('abc', 'new value');
     expect(input.value).toBe('new value');
+  })
+
+  it('getInputByName', () => {
+    render(<input name="abc" />);
+    const input = getInputByName('abc');
+    expect(input).toBeTruthy()
   })
 })
